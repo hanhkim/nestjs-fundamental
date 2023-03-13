@@ -1,16 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserDto } from './user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -31,8 +23,6 @@ export class UserController {
   // @UsePipes(new ValidationPipe())
   @Post()
   createUser(@Body() user: UserDto): UserDto {
-    // const userService = this.moduleRef.get('UserService');
-
     return this.userService.createUser(user);
   }
 }

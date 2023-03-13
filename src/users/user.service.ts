@@ -1,23 +1,16 @@
-import { Injectable, Module } from '@nestjs/common';
-import { UserMockService } from './user-mock.service';
-import { UserController } from './user.controller';
+import { Injectable } from '@nestjs/common';
+import { StoreService } from 'src/store/store.service';
 import { UserDto } from './user.dto';
 
-@Module({
-  controllers: [UserController],
-  providers: [
-    {
-      provide: UserService,
-      useClass: UserMockService,
-    },
-  ],
-})
+@Injectable()
 export class UserService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    // private readonly userService: UserService,
+    private storeService: StoreService,
+  ) {}
+
   createUser(user: any): any {
-    user.id = 1;
-    user.createAt = new Date();
-    user.updateAt = new Date();
+    this.storeService.save(user);
     return UserDto.plainToClass(user);
   }
 }
